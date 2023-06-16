@@ -1,5 +1,11 @@
+<script setup lang="ts">
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const props = defineProps({
+    athlete: { type: Object, required: true}
+});
+</script>
 <template>
-  <div>
+    <div>
     <div class="info">
       <h2>{{athlete.name}}</h2>
       <ul>
@@ -31,15 +37,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "AcademicFitReport",
-  props: {
-    athlete: {
-      type: Object,
-      required: false
-    }
-  }
-};
-</script>
