@@ -52,6 +52,19 @@ export class Athlete {
       public percentile75: number = 0,
       public max: number = 0
     ) {}
+
+    public setPercentile50Color(pGpa: number): string {
+// - school gpa above the player's gpa by more than 0.10 color is #d7737d
+      return this.percentile50 > pGpa ? '#d7737d' : '#c194b5'
+// - school gpa above the player's gpa by up to 0.10 color is #c194b5
+        // ? this.percentile50
+
+// - school gpa equal to the player's gpa color is #b4a7d6
+
+// - school gpa under the player's  gpa by less than 0.10 color is #a6a8da
+
+// - school gpa under the player's gpa by more than 0.10 color is #75ace5
+    }
   }
   
   export class Sat {
@@ -63,13 +76,22 @@ export class Athlete {
   
   export class ReadingScore {
     constructor(public min: number = 0, public max: number = 0) {}
+    public formatSatReading(): string {
+      return (!this.min && !this.max) ? 'Not Reported' : `${this.min}-${this.max}`
+    }
   }
   
   export class MathScore {
     constructor(public min: number = 0, public max: number = 0) {}
+    public formatSatMath(): string {
+      return (!this.min && !this.max) ? 'Not Reported' : `${this.min}-${this.max}`
+    }
   }
   
   export class Act {
     constructor(public min: number | string = "", public max: number | string = "") {}
+    public formatAct(): string {
+      return (!this.min && !this.max) || (this.min === 'N/A' && this.max === 'N/A') ? 'Not Reported' : `${this.min}-${this.max}`
+    }
   }
   

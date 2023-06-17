@@ -51,7 +51,7 @@ const props = defineProps({
             </v-col>
         </v-row>
         <v-row>
-            <ReportTableVue :reports="athlete.report" />
+            <ReportTableVue :reports="athlete.report" :player-gpa="athlete.gpa" />
         </v-row>
     </v-container>
 </template>
