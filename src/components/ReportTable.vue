@@ -2,11 +2,12 @@
 import { type PropType } from 'vue';
 import { Report } from '@/modules/Athlete/Athlete';
 import { type Headers } from '../plugins/vuetify';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const props = defineProps({
+
+defineProps({
     reports: { type: Array as PropType<Report[]>, required: true},
     playerGpa: { type: Number, required: true}
 });
+
 const headers: Headers = [
     [
         {
@@ -22,6 +23,7 @@ const headers: Headers = [
             key: 'division',
             align: 'center',
             sortable: false,
+            width: 150,
             colspan: 1,
         },
         {
@@ -29,7 +31,7 @@ const headers: Headers = [
             key: 'conference',
             align: 'start',
             sortable: false,
-            width: 300,
+            width: 365,
             colspan: 1,
         },
         {
@@ -103,37 +105,86 @@ const headers: Headers = [
         :hide-default-footer="true"
         :items-per-page="15"
         disable-pagination
-        class="elevation-1"
+        density="compact"
     >
         <template v-slot:[`column.ranking`]="{}">
             {{ 'Ranking*'  }}<br />{{ '(DI NCAA)' }}<br />{{  '(DII & DIII Hero Sports)' }}
         </template>
-        <template v-slot:[`item.gpa.percentile50`]="{ item }">
-            <!-- <tr>
-                <td 
-                :style="`background-color:${item.raw.gpa.setPercentile50Color(playerGpa)}`"
-                >
-                    {{ item.columns['gpa.percentile50'] }}
-                </td>
-            </tr> -->
-            <v-chip :color="item.raw.gpa.setPercentile50Color(playerGpa)">
-                {{ item.columns['gpa.percentile50'] }}
-            </v-chip>
+
+        <template v-slot:[`column.gpa.min`]="{column}">
+            <br />{{ column.title }}
         </template>
-        <template v-slot:[`item.sat.reading`]="{ item }">
-            {{ item.columns['sat.reading'].formatSatReading() }}
+
+        <template v-slot:[`column.gpa.percentile25`]="{column}">
+            <br />{{ column.title }}
         </template>
-        <template v-slot:[`item.sat.math`]="{ item }">
-            {{ item.columns['sat.math'].formatSatMath() }}
+
+        <template v-slot:[`column.gpa.percentile50`]="{column}">
+            {{ 'GPA**'  }}<br />{{ column.title }}
         </template>
-        <template v-slot:[`item.act`]="{ item }">
-            {{ item.raw.act.formatAct() }}
+
+        <template v-slot:[`column.gpa.percentile75`]="{column}">
+            <br />{{ column.title }}
+        </template>
+
+        <template v-slot:[`column.gpa.max`]="{column}">
+            <br />{{ column.title }}
+        </template>
+
+        <template v-slot:item="{ item, index }">
+            <!-- <tbody :style="`background-color: ${index % 2 === 0 ? '#E8F0FE' : ''} !important`"> -->
+                <tr :style="`background-color: ${index % 2 === 0 ? '#E8F0FE' : ''} !important`">
+                    <td>{{ item.columns.school }}</td>
+                    <td align="center">{{ item.columns.division }}</td>
+                    <td>{{ item.columns.conference }}</td>
+                    <td align="center">{{ item.columns.ranking }}</td>
+                    <td align="center">{{ item.columns['gpa.min'].toFixed(2) }}</td>
+                    <td align="center">{{ item.columns['gpa.percentile25'].toFixed(2) }}</td>
+                    <td align="center" :style="`background-color: ${item.raw.gpa.setPercentile50Color(playerGpa)} !important;`">{{ item.columns['gpa.percentile50'].toFixed(2) }}</td>
+                    <td align="center">{{ item.columns['gpa.percentile75'].toFixed(2) }}</td>
+                    <td align="center">{{ item.columns['gpa.max'].toFixed(2) }}</td>
+                    <td align="center">{{ item.columns['sat.reading'].formatSatReading() }}</td>
+                    <td align="center">{{ item.columns['sat.math'].formatSatMath() }}</td>
+                    <td align="center">{{ item.raw.act.formatAct() }}</td>
+                </tr>
+            <!-- </tbody> -->
         </template>
         <template #bottom></template>
     </v-data-table>
 </template>
-<style scoped>
+<style>
 .header_title {
     background-color: #222222;
+}
+.v-data-table__th {
+  background-color: #222222 !important;
+  color: white !important;
+}
+.v-data-table.custom-row-even .v-data-table__tbody .v-data-table__row:nth-child(even) {
+  background-color: #ff0000 !important; /* Color for even rows */
+}
+
+.v-data-table.custom-row-odd .v-data-table__tbody .v-data-table__row:nth-child(odd) {
+  background-color: #ff0000 !important; /* Color for odd rows */
+}
+
+.custom-row-even {
+  background-color: #ff0000 !important; /* Color for even rows */
+}
+
+.custom-row-odd {
+    background-color: #ff0000 !important; /* Color for odd rows */
+}
+table > tbody > tr > td:nth-child(1), 
+table > thead > tr > th:nth-child(1) {
+    position: sticky !important; 
+    position: -webkit-sticky !important; 
+    left: 0; 
+    z-index: 9998;
+    background: white;
+}
+
+table > thead > tr > th:nth-child(1) {
+    z-index: 9999;
 }
 </style>
