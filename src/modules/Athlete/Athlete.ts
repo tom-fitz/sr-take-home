@@ -54,16 +54,20 @@ export class Athlete {
     ) {}
 
     public setPercentile50Color(pGpa: number): string {
-// - school gpa above the player's gpa by more than 0.10 color is #d7737d
-      return this.percentile50 > pGpa ? '#d7737d' : '#c194b5'
-// - school gpa above the player's gpa by up to 0.10 color is #c194b5
-        // ? this.percentile50
-
-// - school gpa equal to the player's gpa color is #b4a7d6
-
-// - school gpa under the player's  gpa by less than 0.10 color is #a6a8da
-
-// - school gpa under the player's gpa by more than 0.10 color is #75ace5
+      // - school gpa above the player's gpa by more than 0.10 color is #d7737d
+      return this.percentile50 > pGpa + 0.1
+        ? "#d7737d"
+        // - school gpa above the player's gpa by up to 0.10 color is #c194b5
+        : this.percentile50 <= pGpa + 0.1 && this.percentile50 > pGpa
+        ? "#c194b5"
+        // - school gpa equal to the player's gpa color is #b4a7d6
+        : this.percentile50 === pGpa
+        ? "#b4a7d6"
+        // - school gpa under the player's  gpa by less than 0.10 color is #a6a8da
+        : this.percentile50 < pGpa && this.percentile50 >= pGpa - 0.1
+        ? "#a6a8da"
+        // - school gpa under the player's gpa by more than 0.10 color is #75ace5
+        : "#75ace5";
     }
   }
   

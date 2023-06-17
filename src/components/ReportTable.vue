@@ -100,18 +100,25 @@ const headers: Headers = [
     <v-data-table
         :items="reports"
         :headers="headers"
+        :hide-default-footer="true"
+        :items-per-page="15"
+        disable-pagination
+        class="elevation-1"
     >
         <template v-slot:[`column.ranking`]="{}">
             {{ 'Ranking*'  }}<br />{{ '(DI NCAA)' }}<br />{{  '(DII & DIII Hero Sports)' }}
         </template>
         <template v-slot:[`item.gpa.percentile50`]="{ item }">
-            <tr>
+            <!-- <tr>
                 <td 
                 :style="`background-color:${item.raw.gpa.setPercentile50Color(playerGpa)}`"
                 >
                     {{ item.columns['gpa.percentile50'] }}
                 </td>
-            </tr>
+            </tr> -->
+            <v-chip :color="item.raw.gpa.setPercentile50Color(playerGpa)">
+                {{ item.columns['gpa.percentile50'] }}
+            </v-chip>
         </template>
         <template v-slot:[`item.sat.reading`]="{ item }">
             {{ item.columns['sat.reading'].formatSatReading() }}
@@ -122,6 +129,7 @@ const headers: Headers = [
         <template v-slot:[`item.act`]="{ item }">
             {{ item.raw.act.formatAct() }}
         </template>
+        <template #bottom></template>
     </v-data-table>
 </template>
 <style scoped>
