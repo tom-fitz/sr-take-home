@@ -15,8 +15,21 @@ export class Athlete {
     ) {}
 
     defaultIconColor(): string {
-        const colorArr: string[] = ['#f1603c','#6082fa','#827cb8','#0097a4','#ffe066','#ffa94d'];
-        return colorArr[Math.floor(Math.random() * colorArr.length)]
+      const i = this.getInitials()[1].toUpperCase();
+      const colorMap: Record<string, string> = {
+        A: '#f1603c',
+        B: '#6082fa',
+        C: '#827cb8',
+        D: '#0097a4',
+        E: '#ffe066',
+        F: '#ffa94d',
+        // ...
+      };
+      if (i in colorMap) {
+        return colorMap[i];
+      } else {
+        return '#E8F0FE';
+      }
     }
 
     getInitials(): string {
