@@ -13,6 +13,15 @@ export class Athlete {
       public profile_image: string = "",
       public report: Report[] = []
     ) {}
+
+    defaultIconColor(): string {
+        const colorArr: string[] = ['#f1603c','#6082fa','#827cb8','#0097a4','#ffe066','#ffa94d'];
+        return colorArr[Math.floor(Math.random() * colorArr.length)]
+    }
+
+    getInitials(): string {
+        return this.name.split(" ").map((n)=>n[0]).join("");
+    }
   }
   
   export class Club {
@@ -61,6 +70,6 @@ export class Athlete {
   }
   
   export class Act {
-    constructor(public min: number | string = 0, public max: number | string = 0) {}
+    constructor(public min: number | string = "", public max: number | string = "") {}
   }
   

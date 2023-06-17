@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import { type PropType } from 'vue';
 import { Athlete } from '@/modules/Athlete/Athlete';
+import ReportTableVue from './ReportTable.vue';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
-    athlete: { type: Object as PropType<Athlete>, required: true}
+    athlete: { type: Athlete, required: true}
 });
 
-const defaultIconColor = (): string => {
-    const colorArr: string[] = ['#f1603c','#6082fa','#827cb8','#0097a4','#ffe066','#ffa94d'];
-    return colorArr[Math.floor(Math.random() * colorArr.length)]
-}
-
-const getInitials = (): string => {
-    return props.athlete.name.split(" ").map((n)=>n[0]).join("");
-}
 </script>
 <template>
     <v-container>
         <v-row class="align-end">
             <v-col cols="2" class="ma-0 pl-14">
                 <v-img
-                    v-if="!athlete.profile_image && athlete.profile_image !== ''"
+                    v-if="athlete.profile_image && athlete.profile_image !== ''"
                     width="115"
                     cover
                     :src="athlete.profile_image"
@@ -28,10 +20,10 @@ const getInitials = (): string => {
                 ></v-img>
                 <v-avatar 
                     v-else 
-                    :color="defaultIconColor()"
+                    :color="athlete.defaultIconColor()"
                     size="115"
                 >
-                    <span class="text-h2">{{ getInitials() }}</span>
+                    <span class="text-h2">{{ athlete.getInitials() }}</span>
                 </v-avatar>
             </v-col>
             <v-col cols="2">
@@ -57,6 +49,9 @@ const getInitials = (): string => {
             <v-col cols="3" align="right">
                 <h3 class="report_title">Academic Fit Report</h3>
             </v-col>
+        </v-row>
+        <v-row>
+            <ReportTableVue :reports="athlete.report" />
         </v-row>
     </v-container>
 </template>
