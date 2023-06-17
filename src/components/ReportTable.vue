@@ -97,6 +97,12 @@ const headers: Headers = [
     ]
 ];
 
+// this is definitely a little 'hacky'. v-data-table is still in vuetify's labs
+// so it has limited support and features. Styling an entire row is one of those limitations.
+const cellBgColor = (idx: number): string => {
+    return `background-color: ${idx % 2 === 0 ? '' : '#E8F0FE'} !important`
+}
+
 </script>
 <template>
     <v-data-table
@@ -132,48 +138,28 @@ const headers: Headers = [
         </template>
 
         <template v-slot:item="{ item, index }">
-            <!-- <tbody :style="`background-color: ${index % 2 === 0 ? '#E8F0FE' : ''} !important`"> -->
-                <tr :style="`background-color: ${index % 2 === 0 ? '#E8F0FE' : ''} !important`">
-                    <td>{{ item.columns.school }}</td>
-                    <td align="center">{{ item.columns.division }}</td>
-                    <td>{{ item.columns.conference }}</td>
-                    <td align="center">{{ item.columns.ranking }}</td>
-                    <td align="center">{{ item.columns['gpa.min'].toFixed(2) }}</td>
-                    <td align="center">{{ item.columns['gpa.percentile25'].toFixed(2) }}</td>
-                    <td align="center" :style="`background-color: ${item.raw.gpa.setPercentile50Color(playerGpa)} !important;`">{{ item.columns['gpa.percentile50'].toFixed(2) }}</td>
-                    <td align="center">{{ item.columns['gpa.percentile75'].toFixed(2) }}</td>
-                    <td align="center">{{ item.columns['gpa.max'].toFixed(2) }}</td>
-                    <td align="center">{{ item.columns['sat.reading'].formatSatReading() }}</td>
-                    <td align="center">{{ item.columns['sat.math'].formatSatMath() }}</td>
-                    <td align="center">{{ item.raw.act.formatAct() }}</td>
-                </tr>
-            <!-- </tbody> -->
+            <tr>
+                <td :style="cellBgColor(index)">{{ item.columns.school }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns.division }}</td>
+                <td :style="cellBgColor(index)">{{ item.columns.conference }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns.ranking }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.min'].toFixed(2) }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.percentile25'].toFixed(2) }}</td>
+                <td align="center" :style="`background-color: ${item.raw.gpa.setPercentile50Color(playerGpa)} !important;`">{{ item.columns['gpa.percentile50'].toFixed(2) }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.percentile75'].toFixed(2) }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.max'].toFixed(2) }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['sat.reading'].formatSatReading() }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.columns['sat.math'].formatSatMath() }}</td>
+                <td align="center" :style="cellBgColor(index)">{{ item.raw.act.formatAct() }}</td>
+            </tr>
         </template>
         <template #bottom></template>
     </v-data-table>
 </template>
 <style>
-.header_title {
-    background-color: #222222;
-}
 .v-data-table__th {
   background-color: #222222 !important;
   color: white !important;
-}
-.v-data-table.custom-row-even .v-data-table__tbody .v-data-table__row:nth-child(even) {
-  background-color: #ff0000 !important; /* Color for even rows */
-}
-
-.v-data-table.custom-row-odd .v-data-table__tbody .v-data-table__row:nth-child(odd) {
-  background-color: #ff0000 !important; /* Color for odd rows */
-}
-
-.custom-row-even {
-  background-color: #ff0000 !important; /* Color for even rows */
-}
-
-.custom-row-odd {
-    background-color: #ff0000 !important; /* Color for odd rows */
 }
 table > tbody > tr > td:nth-child(1), 
 table > thead > tr > th:nth-child(1) {
