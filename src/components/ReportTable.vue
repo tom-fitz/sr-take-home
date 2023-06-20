@@ -145,7 +145,11 @@ const cellBgColor = (idx: number): string => {
                 <td align="center" :style="cellBgColor(index)">{{ item.columns.ranking }}</td>
                 <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.min'].toFixed(2) }}</td>
                 <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.percentile25'].toFixed(2) }}</td>
-                <td align="center" :style="`background-color: ${item.raw.gpa.setPercentile50Color(playerGpa)} !important;`">{{ item.columns['gpa.percentile50'].toFixed(2) }}</td>
+                <td 
+                    align="center" 
+                    :style="`background-color: ${item.raw.gpa.setPercentile50Color(playerGpa)} !important;`"
+                    :data-test="`highlighted-cell-${index+1}`"
+                >{{ item.columns['gpa.percentile50'].toFixed(2) }}</td>
                 <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.percentile75'].toFixed(2) }}</td>
                 <td align="center" :style="cellBgColor(index)">{{ item.columns['gpa.max'].toFixed(2) }}</td>
                 <td align="center" :style="cellBgColor(index)">{{ item.columns['sat.reading'].formatSatReading() }}</td>
