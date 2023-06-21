@@ -4,11 +4,11 @@ You can start this app by running `npm i && npm run dev` (`npm i` if this is you
 
 Screen shot displaying the athlete details layout, fixed column on the table, and varying colored background for the GPA column.
 
-![SR-Athlete]('./src/assets/sr-athlete.png')
+![SR-Athlete](sr-athlete.png)
 
 Screen shot showing the athlete details on a mobile device.
 
-![SR-Athlete-Mobile]('./src/assets/sr-athlete-mobile.png')
+![SR-Athlete-Mobile](sr-athlete-mobile.png)
 
 ## Recommended IDE Setup
 
