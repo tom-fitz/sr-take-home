@@ -25,11 +25,7 @@ export class Athlete {
         F: '#ffa94d',
         // ...
       };
-      if (i in colorMap) {
-        return colorMap[i];
-      } else {
-        return '#E8F0FE';
-      }
+      return colorMap[i] ? colorMap[i] : '#E8F0FE';
     }
 
     getInitials(): string {
